@@ -40,9 +40,37 @@ func main() {
 		// read tag
 		tag := reader.readUint8()
 		tagName := GetConstantPoolTagName(tag)
+		fmt.Printf("--index: %d\n", i+1)
 		fmt.Printf("--tag: %s\n", tagName)
 		dispatchConstantRead(tag, reader)
 	}
+
+	// access flags
+	accessFlags := reader.readUint16()
+	fmt.Printf("access flags: %0*b\n", 16, accessFlags)
+
+	// this class
+	thisClass := reader.readUint16() // an index that point to constant pool
+	fmt.Printf("this class index: %d\n", thisClass)
+
+	// super class
+	superClass := reader.readUint16() // an index points to constant pool or zero
+	fmt.Printf("super class index: %d\n", superClass)
+
+	// interface count, u2 means a class can implement 2^16-1 interfaces by jvm
+	interfaceCount := reader.readUint16()
+	fmt.Printf("interface count: %d\n", interfaceCount)
+
+	// interface array
+	for i := uint16(0); i < interfaceCount; i++ {
+		// each interface is a struct of constant_class_info
+		nameIndex := reader.readUint16()
+		fmt.Printf("--interface name_index: %d\n", nameIndex)
+	}
+
+	// fields count
+	fieldsCount := reader.readUint16()
+	fmt.Printf("fields count: %d\n", fieldsCount)
 }
 
 func dispatchConstantRead(tag uint8, reader *ClassFileReader) {

@@ -33,10 +33,10 @@ ClassFile {
 - [x] magic
 - [x] major and minor version
 - [x] constant pool
-- [ ] access flags
-- [ ] this class
-- [ ] super class
-- [ ] interfaces
+- [x] access flags
+- [x] this class
+- [x] super class
+- [x] interfaces
 - [ ] fields
 - [ ] methods
 - [ ] attributes
