@@ -5,15 +5,6 @@
 this project aimed at learning the `class file format` in [jvm8 spec](https://docs.oracle.com/javase/specs/jvms/se8/jvms8.pdf).
 main code written in `golang`
 
-## how to run
-
-```bash
-$ go build .
-$ ./java-simple-class-reader -f /path/to/class/file
-```
-
-Of course, there is a example class file named `Test.class`.
-
 ## Class File Format
 
 ```
@@ -36,3 +27,27 @@ ClassFile {
     attribute_info attributes[attributes_count];
 }
 ```
+
+## project progress
+
+- [x] magic
+- [x] major and minor version
+- [x] constant pool
+- [ ] access flags
+- [ ] this class
+- [ ] super class
+- [ ] interfaces
+- [ ] fields
+- [ ] methods
+- [ ] attributes
+
+
+## how to run
+
+```bash
+$ go build .
+$ ./java-simple-class-reader -f /path/to/class/file
+```
+
+Of course, there is a example class file named `Test.class`.
+
