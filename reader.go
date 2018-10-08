@@ -14,7 +14,6 @@ type ReaderParser interface {
 
 // read a byte
 func (self *ClassFileReader) readUint8() uint8 {
-	// 读取一个字节
 	val := self.binData[0]
 	self.binData = self.binData[1:]
 	return val
