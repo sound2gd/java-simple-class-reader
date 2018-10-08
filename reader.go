@@ -7,6 +7,11 @@ type ClassFileReader struct {
 	binData []byte
 }
 
+// use to parse byte code from reader
+type ReaderParser interface {
+	Parse()
+}
+
 // read a byte
 func (self *ClassFileReader) readUint8() uint8 {
 	// 读取一个字节

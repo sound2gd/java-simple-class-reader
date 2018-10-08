@@ -39,7 +39,6 @@ func GetConstantPoolTagName(value uint8) string {
 	panic("unsupported tag by openjdk8")
 }
 
-// 解析mutf8 -> utf16 -> utf32 -> string
 func decodeMUTF8(bytes []byte) string {
 	utflen := len(bytes)
 	chars := make([]uint16, utflen)
@@ -48,7 +47,6 @@ func decodeMUTF8(bytes []byte) string {
 	count := 0
 	charsCount := 0
 
-	// 小于127的在这里解析
 	for count < utflen {
 		c = uint16(bytes[count])
 		if c > 127 {
@@ -59,7 +57,6 @@ func decodeMUTF8(bytes []byte) string {
 		charsCount++
 	}
 
-	// 大于127的在这里
 	for count < utflen {
 		c = uint16(bytes[count])
 		switch c >> 4 {
@@ -68,7 +65,6 @@ func decodeMUTF8(bytes []byte) string {
 			chars[charsCount] = c
 			charsCount++
 		case 12, 13:
-			// 这段magic得后面解释
 			count += 2
 			if count > utflen {
 				panic("malformed input: partial character at end!")
@@ -96,7 +92,6 @@ func decodeMUTF8(bytes []byte) string {
 		}
 	}
 
-	// 最终的字符数组可能比utflen短
 	chars = chars[0:charsCount]
 	runes := utf16.Decode(chars)
 	return string(runes)
