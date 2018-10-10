@@ -36,7 +36,13 @@ func (c *ClassMemberInfo) Parse() {
 	c.DescriptorIndex = c.Reader.readUint16()
 	c.AttributesCount = c.Reader.readUint16()
 
-	// TODO attributes read
+	attributes := make([]AttributeInfo, c.AttributesCount)
+	for i := range attributes {
+		attr := ReadAttribute(c.Reader, c.CP)
+		attr.ParseAttr()
+		attributes[i] = attr
+	}
+	c.Attributes = attributes
 }
 
 func NewClassMemberInfo(cp *ConstantPool, reader *ClassFileReader) *ClassMemberInfo {

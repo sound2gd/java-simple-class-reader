@@ -84,6 +84,26 @@ func main() {
 	// fields count
 	fieldsCount := reader.readUint16()
 	fmt.Printf("fields count: %d\n", fieldsCount)
+	fields := make([]ClassMemberInfo, fieldsCount)
+	fmt.Printf("fields:\n")
+	for i := range fields {
+		field := *NewClassMemberInfo(&constantPool, reader)
+		field.Parse()
+		fields[i] = field
+		fmt.Printf("--field: %+v\n", field)
+	}
+
+	methodsCount := reader.readUint16()
+	fmt.Printf("methods count: %d\n", methodsCount)
+	methods := make([]ClassMemberInfo, methodsCount)
+	fmt.Printf("methods:\n")
+	for i := range methods {
+		method := *NewClassMemberInfo(&constantPool, reader)
+		method.Parse()
+		methods[i] = method
+		fmt.Printf("--method name: %s\n", constantPool.GetUTF8(method.NameIndex))
+		fmt.Printf("--method: %+v\n", method)
+	}
 }
 
 func readFile(fileName string) ([]byte, error) {
