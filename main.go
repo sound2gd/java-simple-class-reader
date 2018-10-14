@@ -103,6 +103,19 @@ func main() {
 		methods[i] = method
 		fmt.Printf("--method name: %s\n", constantPool.GetUTF8(method.NameIndex))
 		fmt.Printf("--method: %+v\n", method)
+		fmt.Printf("--method attributes: %v", method.Attributes)
+	}
+
+	attributesCount := reader.readUint16()
+	fmt.Printf("attributes count: %d\n", attributesCount)
+	attrs := make([]AttributeInfo, attributesCount)
+	fmt.Printf("attributes:\n")
+	for i := range attrs {
+		attrInfo := ReadAttribute(reader, &constantPool)
+		attrInfo.ParseAttr()
+		attrs[i] = attrInfo
+
+		fmt.Printf("--attribute: %+v\n", attrInfo)
 	}
 }
 
